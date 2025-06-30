@@ -6,24 +6,26 @@ from typing import List
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
 class User:
-    def __init__(self, id, name, email, birthdate):
+    def __init__(self, id, nome, email, senha, tipo):
         self.id = id
-        self.name = name
+        self.nome = nome
         self.email = email
-        self.birthdate = birthdate
+        self.senha = senha
+        self.tipo = tipo  
 
 
     def __repr__(self):
-        return (f"User(id={self.id}, name='{self.name}', email='{self.email}', "
-                f"birthdate='{self.birthdate}'")
+        return f"user(id={self.id}, nome='{self.nome}', email='{self.email}', tipo='{self.tipo}')"
+
 
 
     def to_dict(self):
         return {
             'id': self.id,
-            'name': self.name,
+            'nome': self.nome,
             'email': self.email,
-            'birthdate': self.birthdate
+            'senha': self.senha,
+            'tipo': self.tipo
         }
 
 
@@ -31,9 +33,10 @@ class User:
     def from_dict(cls, data):
         return cls(
             id=data['id'],
-            name=data['name'],
+            nome=data['nome'],
             email=data['email'],
-            birthdate=data['birthdate']
+            senha=data['senha'],
+            tipo=data['tipo']
         )
 
 
@@ -49,7 +52,8 @@ class UserModel:
             return []
         with open(self.FILE_PATH, 'r', encoding='utf-8') as f:
             data = json.load(f)
-            return [User(**item) for item in data]
+            return [User.from_dict(item) for item in data]
+            #return [User(**item) for item in data]
 
 
     def _save(self):

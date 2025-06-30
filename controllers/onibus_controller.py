@@ -15,8 +15,8 @@ class OnibusController(BaseController):
         self.app.route('/onibus/delete/<onibus_id>', method='POST', callback=self.delete_onibus)
 
     def list_onibus(self):
-        onibus = self.onibus_service.get_all()
-        return self.render('onibus', onibus=onibus)
+        lista_onibus = self.onibus_service.get_all()
+        return self.render('onibus', onibus=lista_onibus)
 
     def add_onibus(self):
         if request.method == 'GET':
@@ -28,7 +28,7 @@ class OnibusController(BaseController):
     def edit_onibus(self, onibus_id):
         onibus = self.onibus_service.get_by_id(onibus_id)
         if not onibus:
-            return "Ônibus não encontrado"
+            return "Ônibus não encontrado", 404
 
         if request.method == 'GET':
             return self.render('onibus_form', onibus=onibus, action=f"/onibus/edit/{onibus_id}")

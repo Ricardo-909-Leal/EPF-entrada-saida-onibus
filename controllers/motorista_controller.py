@@ -10,7 +10,6 @@ class MotoristaController(BaseController):
 
     def setup_routes(self):
         self.app.route('/motoristas', method='GET', callback=self.listar)
-        self.app.route('/motoristas/', method='GET', callback=self.listar)  # Adicione esta linha
         self.app.route('/motoristas/add', method=['GET', 'POST'], callback=self.adicionar)
         self.app.route('/motoristas/edit/<cpf>', method=['GET', 'POST'], callback=self.editar)
         self.app.route('/motoristas/delete/<cpf>', method='POST', callback=self.deletar)

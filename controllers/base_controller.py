@@ -30,9 +30,12 @@ class BaseController:
 
 
     def render(self, template, **context):
-        """Método auxiliar para renderizar templates"""
         from bottle import template as render_template
-        return render_template(template, **context)
+        title = context.get('title', 'Sistema')  # pega título ou usa 'Sistema' padrão
+        content = render_template(template, title=title, **context)  # renderiza o template filho
+        return render_template('layout', base=content, title=title, **context)  # renderiza o layout com o conteúdo do filho
+
+
 
 
     def redirect(self, path):

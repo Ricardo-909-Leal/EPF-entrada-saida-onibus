@@ -1,4 +1,4 @@
-% layout('layout')  # usa o layout base, ajuste se usar outro nome
+% rebase('layout.tpl')
 
 <h2>Lista de Ônibus</h2>
 

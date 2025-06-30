@@ -1,5 +1,3 @@
-% layout('layout')
-
 <h2>
     % if onibus:
         Editar Ônibus

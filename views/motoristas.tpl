@@ -1,10 +1,8 @@
-% include('layout.tpl')
+% title = "Lista de Motoristas"
 
 <h2>Lista de Motoristas</h2>
 
-<a href="/motoristas/add">Adicionar Motorista</a><br><br>
-
-<table border="1" cellpadding="8" cellspacing="0">
+<table>
     <thead>
         <tr>
             <th>CPF</th>
@@ -15,16 +13,16 @@
         </tr>
     </thead>
     <tbody>
-    % for motorista in motoristas:
+    % for m in motoristas:
         <tr>
-            <td>{{motorista.cpf}}</td>
-            <td>{{motorista.nome}}</td>
-            <td>{{motorista.cnh}}</td>
-            <td>{{motorista.empresa}}</td>
+            <td>{{m.cpf}}</td>
+            <td>{{m.nome}}</td>
+            <td>{{m.cnh}}</td>
+            <td>{{m.empresa}}</td>
             <td>
-                <a href="/motoristas/edit/{{motorista.cpf}}">Editar</a> |
-                <form action="/motoristas/delete/{{motorista.cpf}}" method="post" style="display:inline;" onsubmit="return confirm('Confirma exclusão?');">
-                    <button type="submit">Deletar</button>
+                <a href="/motoristas/edit/{{m.cpf}}" class="btn btn-edit">Editar</a>
+                <form action="/motoristas/delete/{{m.cpf}}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-delete" onclick="return confirm('Confirmar exclusão?')">Excluir</button>
                 </form>
             </td>
         </tr>
@@ -32,4 +30,4 @@
     </tbody>
 </table>
 
-<a href="/">Voltar ao Início</a>
+<a href="/motoristas/add" class="btn btn-success">Adicionar Motorista</a>

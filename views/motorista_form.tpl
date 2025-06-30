@@ -1,25 +1,26 @@
-% include('layout.tpl')
 
-<h2>{{'Editar Motorista' if motorista else 'Cadastrar Motorista'}}</h2>
+% title = "Formulário de Motorista"
 
-<form action="{{action}}" method="post">
-    <label>CPF:</label><br>
-    % if not motorista:
-        <input type="text" name="cpf" required><br>
-    % else:
-        <input type="text" name="cpf" value="{{motorista.cpf}}" readonly><br>
-    % end
+% if motorista:
+<h2>Editar Motorista</h2>
+% else:
+<h2>Adicionar Motorista</h2>
+% end
 
-    <label>Nome:</label><br>
-    <input type="text" name="nome" value="{{motorista.nome if motorista else ''}}" required><br>
+<form action="{{action}}" method="post" class="form">
+    <label for="cpf">CPF:</label>
+    <input type="text" id="cpf" name="cpf" value="{{motorista.cpf if motorista else ''}}" {{'readonly' if motorista else ''}} required>
 
-    <label>CNH:</label><br>
-    <input type="text" name="cnh" value="{{motorista.cnh if motorista else ''}}" required><br>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" value="{{motorista.nome if motorista else ''}}" required>
 
-    <label>Empresa:</label><br>
-    <input type="text" name="empresa" value="{{motorista.empresa if motorista else ''}}" required><br><br>
+    <label for="cnh">CNH:</label>
+    <input type="text" id="cnh" name="cnh" value="{{motorista.cnh if motorista else ''}}" required>
 
-    <button type="submit">Salvar</button>
+    <label for="empresa">Empresa:</label>
+    <input type="text" id="empresa" name="empresa" value="{{motorista.empresa if motorista else ''}}" required>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
 </form>
 
-<a href="/motoristas">Voltar</a>
+<a href="/motoristas" class="btn">← Voltar</a>

@@ -9,8 +9,7 @@ class OnibusService:
         return self.onibus_model.get_all()
 
     def save(self):
-        last_id = max([int(o.id) for o in self.onibus_model.get_all()], default=0)
-        new_id = str(last_id + 1)
+        new_id = self.onibus_model.get_next_id() 
 
         placa = request.forms.get('placa')
         linha = request.forms.get('linha')
@@ -33,17 +32,11 @@ class OnibusService:
         return self.onibus_model.get_by_id(onibus_id)
 
     def edit_onibus(self, onibus):
-        placa = request.forms.get('placa')
-        linha = request.forms.get('linha')
-        horario_chegada = request.forms.get('horario_chegada')
-        horario_saida = request.forms.get('horario_saida')
-        terminal = request.forms.get('terminal')
-
-        onibus.placa = placa
-        onibus.linha = linha
-        onibus.horario_chegada = horario_chegada
-        onibus.horario_saida = horario_saida
-        onibus.terminal = terminal
+        onibus.placa = request.forms.get('placa')
+        onibus.linha = request.forms.get('linha')
+        onibus.horario_chegada = request.forms.get('horario_chegada')
+        onibus.horario_saida = request.forms.get('horario_saida')
+        onibus.terminal = request.forms.get('terminal')
 
         self.onibus_model.update_onibus(onibus)
 

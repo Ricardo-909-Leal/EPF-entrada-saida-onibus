@@ -6,26 +6,24 @@ from typing import List
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
 class User:
-    def __init__(self, id, nome, email, senha, tipo):
+    def __init__(self, id, name, email, birthdate):
         self.id = id
-        self.nome = nome
+        self.name = name
         self.email = email
-        self.senha = senha
-        self.tipo = tipo  
+        self.birthdate = birthdate
 
 
     def __repr__(self):
-        return f"user(id={self.id}, nome='{self.nome}', email='{self.email}', tipo='{self.tipo}')"
-
+        return (f"User(id={self.id}, name='{self.name}', email='{self.email}', "
+                f"birthdate='{self.birthdate}'")
 
 
     def to_dict(self):
         return {
             'id': self.id,
-            'nome': self.nome,
+            'name': self.name,
             'email': self.email,
-            'senha': self.senha,
-            'tipo': self.tipo
+            'birthdate': self.birthdate
         }
 
 
@@ -33,10 +31,9 @@ class User:
     def from_dict(cls, data):
         return cls(
             id=data['id'],
-            nome=data['nome'],
+            name=data['name'],
             email=data['email'],
-            senha=data['senha'],
-            tipo=data['tipo']
+            birthdate=data['birthdate']
         )
 
 

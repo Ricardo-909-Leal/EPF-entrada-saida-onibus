@@ -29,11 +29,21 @@ class BaseController:
         return static_file(filename, root='./static')
 
 
-    def render(self, template, **context):
+    '''def render(self, template, **context):
         from bottle import template as render_template
         title = context.get('title', 'Sistema')  # pega título ou usa 'Sistema' padrão
         content = render_template(template, title=title, **context)  # renderiza o template filho
         return render_template('layout', base=content, title=title, **context)  # renderiza o layout com o conteúdo do filho
+'''
+    def render(self, template, **context):
+        from bottle import template as render_template
+        title = context.get('title', 'Sistema')  # usa o título se tiver, ou "Sistema"
+        
+        # remove 'title' do context para evitar duplicado no próximo passo
+        context_without_title = {k: v for k, v in context.items() if k != 'title'}
+
+        content = render_template(template, **context_without_title)
+        return render_template('layout', base=content, title=title, **context_without_title)
 
 
 

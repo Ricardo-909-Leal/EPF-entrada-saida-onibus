@@ -1,32 +1,52 @@
-<h2>
-    % if onibus:
-        Editar Ônibus
-    % else:
-        Adicionar Novo Ônibus
-    % end
-</h2>
 
-<form action="{{action}}" method="post">
-    <label>Placa:<br>
-        <input type="text" name="placa" required value="{{onibus.placa if onibus else ''}}">
-    </label><br><br>
+<h2>{{'Editar' if onibus else 'Cadastrar'}} Ônibus</h2>
 
-    <label>Linha:<br>
-        <input type="text" name="linha" required value="{{onibus.linha if onibus else ''}}">
-    </label><br><br>
+<form method="post" class="form">
+    <label>Placa</label>
+    <input type="text" name="placa" value="{{onibus.placa if onibus else ''}}" required>
 
-    <label>Horário de Chegada:<br>
-        <input type="time" name="horario_chegada" required value="{{onibus.horario_chegada if onibus else ''}}">
-    </label><br><br>
+    <label>Linha</label>
+    <input type="text" name="linha" value="{{onibus.linha if onibus else ''}}" required>
 
-    <label>Horário de Saída:<br>
-        <input type="time" name="horario_saida" required value="{{onibus.horario_saida if onibus else ''}}">
-    </label><br><br>
+    <label>Horário de Chegada</label>
+    <input type="time" name="horario_chegada" value="{{onibus.horario_chegada if onibus else ''}}" required>
 
-    <label>Terminal:<br>
-        <input type="text" name="terminal" required value="{{onibus.terminal if onibus else ''}}">
-    </label><br><br>
+    <label>Horário de Saída</label>
+    <input type="time" name="horario_saida" value="{{onibus.horario_saida if onibus else ''}}" required>
 
-    <button type="submit">Salvar</button>
-    <a href="/onibus">Cancelar</a>
+    <label>Motorista</label>
+    <select name="cpf_motorista" required>
+        <option value="">Selecione</option>
+        % for m in motoristas:
+            <option value="{{m.cpf}}" {{'selected' if onibus and onibus.cpf_motorista == m.cpf else ''}}>
+                {{m.nome}} - {{m.cpf}}
+            </option>
+        % end
+    </select>
+
+    <label>Terminal de Origem</label>
+    <select name="id_terminal_origem" required>
+        <option value="">Selecione</option>
+        % for t in terminais:
+            <option value="{{t.id}}" {{'selected' if onibus and onibus.id_terminal_origem == t.id else ''}}>
+                {{t.nome}}
+            </option>
+        % end
+    </select>
+
+    <label>Terminal de Destino</label>
+    <select name="id_terminal_destino" required>
+        <option value="">Selecione</option>
+        % for t in terminais:
+            <option value="{{t.id}}" {{'selected' if onibus and onibus.id_terminal_destino == t.id else ''}}>
+                {{t.nome}}
+            </option>
+        % end
+    </select>
+
+    <button type="submit" class="btn btn-success">
+        {{'Atualizar' if onibus else 'Cadastrar'}}
+    </button>
 </form>
+
+<p><a href="/onibus" class="btn">Voltar à Lista</a></p>

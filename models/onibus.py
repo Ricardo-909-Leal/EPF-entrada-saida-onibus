@@ -1,22 +1,24 @@
 import json
 import os
-from dataclasses import dataclass
 from typing import List
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
 class Onibus:
-    def __init__(self, id, placa, linha, horario_chegada, horario_saida, terminal):
+    def __init__(self, id, placa, linha, horario_chegada, horario_saida, terminal, id_terminal_origem=None, id_terminal_destino=None, cpf_motorista=None):
         self.id = id
         self.placa = placa
         self.linha = linha
         self.horario_chegada = horario_chegada
         self.horario_saida = horario_saida
-        self.terminal = terminal
-
-    def __repr__(self):
-        return (f"Onibus(id={self.id}, placa='{self.placa}', linha='{self.linha}', "
-                f"chegada='{self.horario_chegada}', saida='{self.horario_saida}', terminal='{self.terminal}')")
+        self.terminal = terminal 
+        self.id_terminal_origem = id_terminal_origem
+        self.id_terminal_destino = id_terminal_destino
+        self.cpf_motorista = cpf_motorista
+        
+        self.motorista_nome = None
+        self.origem_nome = None
+        self.destino_nome = None
 
     def to_dict(self):
         return {
@@ -25,7 +27,10 @@ class Onibus:
             'linha': self.linha,
             'horario_chegada': self.horario_chegada,
             'horario_saida': self.horario_saida,
-            'terminal': self.terminal
+            'terminal': self.terminal,
+            'id_terminal_origem': self.id_terminal_origem,
+            'id_terminal_destino': self.id_terminal_destino,
+            'cpf_motorista': self.cpf_motorista
         }
 
     @classmethod
@@ -36,7 +41,10 @@ class Onibus:
             linha=data['linha'],
             horario_chegada=data['horario_chegada'],
             horario_saida=data['horario_saida'],
-            terminal=data['terminal']
+            terminal=data['terminal'],
+            id_terminal_origem=data.get('id_terminal_origem'),
+            id_terminal_destino=data.get('id_terminal_destino'),
+            cpf_motorista=data.get('cpf_motorista')
         )
 
 class OnibusModel:
@@ -61,7 +69,7 @@ class OnibusModel:
 
     def get_by_id(self, onibus_id):
         return next((o for o in self.onibus if o.id == onibus_id), None)
-    
+
     def get_next_id(self):
         if not self.onibus:
             return 1
@@ -81,13 +89,3 @@ class OnibusModel:
     def delete_onibus(self, onibus_id):
         self.onibus = [o for o in self.onibus if o.id != onibus_id]
         self._save()
-
-
-
-
-
-
-    def get_next_id(self):
-        if not self.onibus:
-            return 1
-        return max(o.id for o in self.onibus) + 1

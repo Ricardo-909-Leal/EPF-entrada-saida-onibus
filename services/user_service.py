@@ -17,8 +17,13 @@ class UserService:
         name = request.forms.get('name')
         email = request.forms.get('email')
         birthdate = request.forms.get('birthdate')
+        password = request.forms.get('password')
+        if not password:
+            # Pode lançar um erro ou retornar uma mensagem amigável
+            raise ValueError("Senha não pode ser vazia")
+        tipo = request.forms.get('tipo', 'user')
 
-        user = User(id=new_id, name=name, email=email, birthdate=birthdate)
+        user = User(id=new_id, name=name, email=email, birthdate=birthdate, password=password, tipo=tipo)
         self.user_model.add_user(user)
 
 
@@ -30,10 +35,12 @@ class UserService:
         name = request.forms.get('name')
         email = request.forms.get('email')
         birthdate = request.forms.get('birthdate')
+        tipo = request.forms.get('tipo', 'user')
 
         user.name = name
         user.email = email
         user.birthdate = birthdate
+        user.tipo = tipo
 
         self.user_model.update_user(user)
 

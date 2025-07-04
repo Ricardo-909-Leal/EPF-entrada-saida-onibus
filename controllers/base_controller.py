@@ -1,11 +1,16 @@
 from bottle import static_file
+from bottle import request, redirect, response
 
 class BaseController:
     def __init__(self, app):
         self.app = app
         self._setup_base_routes()
 
-
+    def require_login(self):
+        usuario = request.get_cookie('usuario')
+        if not usuario:
+            redirect('/login')
+            
     def _setup_base_routes(self):
         """Configura rotas básicas comuns a todos os controllers"""
         self.app.route('/', method='GET', callback=self.home_redirect)
@@ -29,19 +34,17 @@ class BaseController:
         return static_file(filename, root='./static')
 
 
-    '''def render(self, template, **context):
-        from bottle import template as render_template
-        title = context.get('title', 'Sistema')  # pega título ou usa 'Sistema' padrão
-        content = render_template(template, title=title, **context)  # renderiza o template filho
-        return render_template('layout', base=content, title=title, **context)  # renderiza o layout com o conteúdo do filho
-'''
     def render(self, template, **context):
+        usuario_nome = request.get_cookie('usuario')
+        usuario_obj = None
+        if usuario_nome:
+            from models.user import UserModel
+            user_model = UserModel()
+            usuario_obj = next((u for u in user_model.get_all() if u.name == usuario_nome), None)
+        context['user'] = usuario_obj
         from bottle import template as render_template
-        title = context.get('title', 'Sistema')  # usa o título se tiver, ou "Sistema"
-        
-        # remove 'title' do context para evitar duplicado no próximo passo
+        title = context.get('title', 'Sistema')
         context_without_title = {k: v for k, v in context.items() if k != 'title'}
-
         content = render_template(template, **context_without_title)
         return render_template('layout', base=content, title=title, **context_without_title)
 
@@ -52,3 +55,11 @@ class BaseController:
         """Método auxiliar para redirecionamento"""
         from bottle import redirect as bottle_redirect
         return bottle_redirect(path)
+
+    def set_usuario_cookie(self, nome, tipo):
+        response.set_cookie('usuario', nome, path='/')
+        response.set_cookie('tipo', tipo, path='/')
+
+    def logout_usuario(self):
+        response.delete_cookie('usuario', path='/')
+        response.delete_cookie('tipo', path='/')

@@ -54,6 +54,12 @@
             <li><a href="/fiscais">Fiscais</a></li>
             <li><a href="/terminais">Terminais</a></li>
             <li><a href="/users">Usuários</a></li>
+
+            % if user:
+                <li><a href="/logout">Sair ({{user.name}})</a></li>
+            % else:
+                <li><a href="/login">Login</a></li>
+            % end
         </ul>
     </nav>
 

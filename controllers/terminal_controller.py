@@ -15,10 +15,12 @@ class TerminalController(BaseController):
         self.app.route('/terminais/delete/<terminal_id>', method='POST', callback=self.deletar)
 
     def listar(self):
+        self.require_login()  # Verifica se o usuário está logado
         terminais = self.service.get_all()
         return self.render('terminais', terminais=terminais, title="Lista de Terminais")
 
     def adicionar(self):
+        self.require_login()
         if request.method == 'GET':
             return self.render('terminal_form', terminal=None, action='/terminais/add', title="Adicionar Terminal")
         else:
@@ -26,6 +28,7 @@ class TerminalController(BaseController):
             self.redirect('/terminais')
 
     def editar(self, terminal_id):
+        self.require_login()
         terminal = self.service.get_by_id(terminal_id)
         if not terminal:
             return "Terminal não encontrado", 404
@@ -37,6 +40,7 @@ class TerminalController(BaseController):
             self.redirect('/terminais')
 
     def deletar(self, terminal_id):
+        self.require_login()
         self.service.delete_terminal(terminal_id)
         self.redirect('/terminais')
 

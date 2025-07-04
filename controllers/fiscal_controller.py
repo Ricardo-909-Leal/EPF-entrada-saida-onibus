@@ -15,10 +15,12 @@ class FiscalController(BaseController):
         self.app.route('/fiscais/delete/<fiscal_id>', method='POST', callback=self.deletar)
 
     def listar(self):
+        self.require_login()  # Verifica se o usuário está logado
         fiscais = self.fiscal_service.get_all()
         return self.render('fiscais', fiscais=fiscais, title="Lista de Fiscais")
 
     def adicionar(self):
+        self.require_login()
         if request.method == 'GET':
             return self.render('fiscal_form', fiscal=None, action='/fiscais/add', title="Adicionar Fiscal")
         else:
@@ -26,6 +28,7 @@ class FiscalController(BaseController):
             self.redirect('/fiscais')
 
     def editar(self, fiscal_id):
+        self.require_login()
         fiscal = self.fiscal_service.get_by_id(fiscal_id)
         if not fiscal:
             return "Fiscal não encontrado", 404
@@ -37,6 +40,7 @@ class FiscalController(BaseController):
             self.redirect('/fiscais')
 
     def deletar(self, fiscal_id):
+        self.require_login()
         self.fiscal_service.delete_fiscal(fiscal_id)
         self.redirect('/fiscais')
 

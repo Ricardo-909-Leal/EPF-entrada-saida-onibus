@@ -15,6 +15,7 @@ class OnibusController(BaseController):
         self.app.route('/onibus/delete/<onibus_id>', method='POST', callback=self.delete_onibus)
 
     def list_onibus(self):
+        self.require_login()
         lista = self.onibus_service.get_all()
 
         for o in lista:
@@ -26,6 +27,7 @@ class OnibusController(BaseController):
 
 
     def add_onibus(self):
+        self.require_login()
         if request.method == 'GET':
             motoristas = self.onibus_service.get_motoristas()
             terminais = self.onibus_service.get_terminais()
@@ -35,6 +37,7 @@ class OnibusController(BaseController):
             self.redirect('/onibus')
 
     def edit_onibus(self, onibus_id):
+        self.require_login()
         onibus = self.onibus_service.get_by_id(onibus_id)
         if not onibus:
             return "Ônibus não encontrado", 404
@@ -48,6 +51,7 @@ class OnibusController(BaseController):
             self.redirect('/onibus')
 
     def delete_onibus(self, onibus_id):
+        self.require_login()
         self.onibus_service.delete_onibus(onibus_id)
         self.redirect('/onibus')
 

@@ -15,11 +15,13 @@ class MotoristaController(BaseController):
         self.app.route('/motoristas/delete/<cpf>', method='POST', callback=self.deletar)
     
     def listar(self):
+        self.require_login()  # Verifica se o usuário está logado
         print("Chamou listar motoristas")
         motoristas = self.service.get_all()
         return self.render('motoristas', motoristas=motoristas)
 
     def adicionar(self):
+        self.require_login()
         if request.method == 'GET':
             return self.render('motorista_form', motorista=None, action='/motoristas/add')
         else:
@@ -27,6 +29,7 @@ class MotoristaController(BaseController):
             self.redirect('/motoristas')
 
     def editar(self, cpf):
+        self.require_login()
         motorista = self.service.get_by_cpf(cpf)
         if not motorista:
             return "Motorista não encontrado", 404
@@ -38,6 +41,7 @@ class MotoristaController(BaseController):
             self.redirect('/motoristas')
 
     def deletar(self, cpf):
+        self.require_login()
         self.service.delete_motorista(cpf)
         self.redirect('/motoristas')
 

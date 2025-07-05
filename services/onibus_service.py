@@ -2,6 +2,7 @@ from bottle import request
 from models.onibus import OnibusModel, Onibus
 from models.motorista import MotoristaModel
 from models.terminal import TerminalModel
+from datetime import datetime
 
 class OnibusService:
     def __init__(self):
@@ -26,10 +27,10 @@ class OnibusService:
         return onibus_list
 
     def get_motoristas(self):
-        return MotoristaModel().get_all()
+        return self.motorista_model.get_all()
 
     def get_terminais(self):
-        return TerminalModel().get_all()
+        return self.terminal_model.get_all()
 
     def save(self):
         new_id = self.onibus_model.get_next_id() 
@@ -42,6 +43,7 @@ class OnibusService:
         cpf_motorista = request.forms.get('cpf_motorista')
         id_terminal_origem = request.forms.get('id_terminal_origem')
         id_terminal_destino = request.forms.get('id_terminal_destino')
+        previsao_chegada = request.forms.get('previsao_chegada')
 
         onibus = Onibus(
             id=new_id,
@@ -52,20 +54,15 @@ class OnibusService:
             terminal=terminal,
             id_terminal_origem=id_terminal_origem,
             id_terminal_destino=id_terminal_destino,
-            cpf_motorista=cpf_motorista
-)
+            cpf_motorista=cpf_motorista,
+            previsao_chegada=previsao_chegada
+        )
 
         self.onibus_model.add_onibus(onibus)
 
     def get_by_id(self, onibus_id):
         return self.onibus_model.get_by_id(onibus_id)
-    
-    def get_motoristas(self):
-        return self.motorista_model.get_all()
 
-    def get_terminais(self):
-        return self.terminal_model.get_all()
-    
     def get_nome_motorista(self, cpf):
         motoristas = self.get_motoristas()
         for m in motoristas:
@@ -80,7 +77,6 @@ class OnibusService:
                 return t.nome
         return 'Desconhecido'
 
-
     def edit_onibus(self, onibus):
         onibus.placa = request.forms.get('placa')
         onibus.linha = request.forms.get('linha')
@@ -90,8 +86,39 @@ class OnibusService:
         onibus.cpf_motorista = request.forms.get('cpf_motorista')
         onibus.id_terminal_origem = request.forms.get('id_terminal_origem')
         onibus.id_terminal_destino = request.forms.get('id_terminal_destino')
+        onibus.previsao_chegada = request.forms.get('previsao_chegada')
 
         self.onibus_model.update_onibus(onibus)
 
     def delete_onibus(self, onibus_id):
         self.onibus_model.delete_onibus(onibus_id)
+
+    def calcular_diferenca(self, onibus: Onibus):
+        if not onibus.data_chegada or not onibus.previsao_chegada:
+            return "Sem dados suficientes"
+
+        atual = datetime.strptime(onibus.data_chegada, "%Y-%m-%d %H:%M")
+        previsto = datetime.strptime(onibus.previsao_chegada, "%Y-%m-%d %H:%M")
+
+        diferenca = atual - previsto
+        minutos = int(diferenca.total_seconds() / 60)
+
+        if minutos > 0:
+            return f"Atrasado em {minutos} minutos"
+        elif minutos < 0:
+            return f"Adiantado em {-minutos} minutos"
+        else:
+            return "Chegou no horário"
+
+    def encerrar_viagem(self, onibus_id, passagens):
+        onibus = self.get_by_id(onibus_id)
+        if not onibus:
+            return None
+
+        onibus.status = 'chegado'
+        onibus.data_chegada = datetime.now().strftime("%Y-%m-%d %H:%M")
+        onibus.passagens = passagens
+
+        self.onibus_model.update_onibus(onibus)
+        return onibus
+

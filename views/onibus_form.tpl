@@ -8,10 +8,10 @@
     <label>Linha</label>
     <input type="text" name="linha" value="{{onibus.linha if onibus else ''}}" required>
 
-    <label>Horário de Chegada</label>
+    <label>Horário de partida</label>
     <input type="time" name="horario_chegada" value="{{onibus.horario_chegada if onibus else ''}}" required>
 
-    <label>Horário de Saída</label>
+    <label>Horário de chegada ao destino</label>
     <input type="time" name="horario_saida" value="{{onibus.horario_saida if onibus else ''}}" required>
 
     <label>Motorista</label>
@@ -24,7 +24,7 @@
         % end
     </select>
 
-    <label>Terminal de Origem</label>
+    <label>Terminal de partida</label>
     <select name="id_terminal_origem" required>
         <option value="">Selecione</option>
         % for t in terminais:

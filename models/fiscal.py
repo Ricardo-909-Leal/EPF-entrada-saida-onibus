@@ -4,16 +4,18 @@ import os
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
 class Fiscal:
-    def __init__(self, id, nome, matricula):
+    def __init__(self, id, nome, matricula, terminal_id=None):
         self.id = id
         self.nome = nome
         self.matricula = matricula
+        self.terminal_id = terminal_id
 
     def to_dict(self):
         return {
             'id': self.id,
             'nome': self.nome,
-            'matricula': self.matricula
+            'matricula': self.matricula,
+            'terminal_id': self.terminal_id
         }
 
     @classmethod
@@ -21,7 +23,8 @@ class Fiscal:
         return cls(
             id=data['id'],
             nome=data['nome'],
-            matricula=data['matricula']
+            matricula=data['matricula'],
+            terminal_id=data.get('terminal_id')
         )
 
 

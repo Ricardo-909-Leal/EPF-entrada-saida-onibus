@@ -6,8 +6,8 @@
         <tr>
             <th>Placa</th>
             <th>Linha</th>
-            <th>Horário de Chegada</th>
-            <th>Horário de Saída</th>
+            <th>Horário de partida</th>
+            <th>Horário de chegada ao destino</th>
             <th>Motorista</th>
             <th>Origem</th>
             <th>Destino</th>

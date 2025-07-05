@@ -1,11 +1,15 @@
 import json
 import os
 from typing import List
+from datetime import datetime
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
 class Onibus:
-    def __init__(self, id, placa, linha, horario_chegada, horario_saida, terminal, id_terminal_origem=None, id_terminal_destino=None, cpf_motorista=None):
+    def __init__(self, id, placa, linha, horario_chegada, horario_saida, terminal, 
+                 id_terminal_origem=None, id_terminal_destino=None, cpf_motorista=None, 
+                 status='esperando', data_saida=None, data_chegada=None, passagens=0, 
+                 previsao_chegada=None):
         self.id = id
         self.placa = placa
         self.linha = linha
@@ -15,6 +19,13 @@ class Onibus:
         self.id_terminal_origem = id_terminal_origem
         self.id_terminal_destino = id_terminal_destino
         self.cpf_motorista = cpf_motorista
+        
+        self.status = status  
+        self.data_saida = data_saida
+        self.data_chegada = data_chegada
+        self.passagens = passagens  
+        self.previsao_chegada = previsao_chegada  
+
         
         self.motorista_nome = None
         self.origem_nome = None
@@ -44,8 +55,31 @@ class Onibus:
             terminal=data['terminal'],
             id_terminal_origem=data.get('id_terminal_origem'),
             id_terminal_destino=data.get('id_terminal_destino'),
-            cpf_motorista=data.get('cpf_motorista')
+            cpf_motorista=data.get('cpf_motorista'),
+            status=data.get('status', 'esperando'),
+            data_saida=data.get('data_saida'),
+            data_chegada=data.get('data_chegada'),
+            passagens=data.get('passagens', 0),
+            previsao_chegada=data.get('previsao_chegada')
         )
+    
+    def calcular_diferenca(self):
+        if not self.data_chegada or not self.previsao_chegada:
+            return "Sem dados suficientes"
+
+        atual = datetime.strptime(self.data_chegada, "%Y-%m-%d %H:%M")
+        previsto = datetime.strptime(self.previsao_chegada, "%Y-%m-%d %H:%M")
+
+        diferenca = atual - previsto
+        minutos = int(diferenca.total_seconds() / 60)
+
+        if minutos > 0:
+            return f"Atrasado em {minutos} minutos"
+        elif minutos < 0:
+            return f"Adiantado em {-minutos} minutos"
+        else:
+            return "Chegou no horário"
+
 
 class OnibusModel:
     FILE_PATH = os.path.join(DATA_DIR, 'onibus.json')

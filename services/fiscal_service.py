@@ -1,39 +1,33 @@
 from bottle import request
 from models.fiscal import FiscalModel, Fiscal
+from models.fiscal import FiscalModel, Fiscal
 
 class FiscalService:
     def __init__(self):
-        self.fiscal_model = FiscalModel()
+        self.model = FiscalModel()
 
     def get_all(self):
-        return self.fiscal_model.get_all()
+        return self.model.get_all()
 
-    def save(self):
-        last_id = max([int(f.id) for f in self.fiscal_model.get_all()], default=0)
-        new_id = str(last_id + 1)
+    def get_by_id(self, id):
+        return self.model.get_by_id(id)
 
-        nome = request.forms.get('nome')
-        matricula = request.forms.get('matricula')
-
-        fiscal = Fiscal(
-            id=new_id,
+    def save(self, nome, matricula, terminal_id):
+        novo_fiscal = Fiscal(
+            id=self.model.get_next_id(),
             nome=nome,
-            matricula=matricula
+            matricula=matricula,
+            terminal_id=terminal_id
         )
+        self.model.add_fiscal(novo_fiscal)
 
-        self.fiscal_model.add_fiscal(fiscal)
+    def edit_fiscal(self, fiscal_id, nome, matricula, terminal_id):
+        fiscal = self.model.get_by_id(fiscal_id)
+        if fiscal:
+            fiscal.nome = nome
+            fiscal.matricula = matricula
+            fiscal.terminal_id = terminal_id
+            self.model.update_fiscal(fiscal)
 
-    def get_by_id(self, fiscal_id):
-        return self.fiscal_model.get_by_id(fiscal_id)
-
-    def edit_fiscal(self, fiscal):
-        nome = request.forms.get('nome')
-        matricula = request.forms.get('matricula')
-
-        fiscal.nome = nome
-        fiscal.matricula = matricula
-
-        self.fiscal_model.update_fiscal(fiscal)
-
-    def delete_fiscal(self, fiscal_id):
-        self.fiscal_model.delete_fiscal(fiscal_id)
+    def delete_fiscal(self, id):
+        self.model.delete_fiscal(id)

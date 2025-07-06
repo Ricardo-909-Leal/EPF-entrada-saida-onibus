@@ -13,6 +13,7 @@ class AuthService:
             return json.load(f)
 
     def autenticar(self, usuario, senha):
+        self.usuarios = self._carregar_usuarios()  
         for u in self.usuarios:
             if u['email'] == usuario and u['password'] == senha:
                 return u

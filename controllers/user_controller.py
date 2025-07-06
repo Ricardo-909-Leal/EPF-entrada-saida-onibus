@@ -34,6 +34,7 @@ class UserController(BaseController):
                 return self.render('user_form', user=None, action="/users/add", erro=str(e))
 
     def edit_user(self, user_id):
+        self.require_login()
         user = self.user_service.get_by_id(user_id)
         password = request.forms.get('password')
         if password:
@@ -64,6 +65,7 @@ class UserController(BaseController):
 
 
     def delete_user(self, user_id):
+        self.require_login()
         self.user_service.delete_user(user_id)
         self.redirect('/users')
 

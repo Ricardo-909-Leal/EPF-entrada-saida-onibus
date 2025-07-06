@@ -11,8 +11,7 @@
         <tr style="background-color: #f2f2f2;">
             <th>Placa</th>
             <th>Linha</th>
-            <th>Horário de partida</th>
-            <th>Horário de chegada ao destino</th>
+            <th>Tempo de viagem<th>
             <th>Motorista</th>
             <th>Origem</th>
             <th>Destino</th>
@@ -26,8 +25,7 @@
         <tr>
             <td>{{o.placa}}</td>
             <td>{{o.linha}}</td>
-            <td>{{o.horario_saida or '-'}}</td>
-            <td>{{o.horario_chegada or '-'}}</td>
+            <td>{{o.previsao}}<td>
             <td>{{o.nome_motorista}}</td>
             <td>{{o.nome_terminal_origem}}</td>
             <td>{{o.nome_terminal_destino}}</td>

@@ -8,11 +8,8 @@
     <label>Linha</label>
     <input type="text" name="linha" value="{{onibus.linha if onibus else ''}}" required>
 
-    <label>Horário de partida</label>
-    <input type="time" name="horario_chegada" value="{{onibus.horario_chegada if onibus else ''}}" required>
-
-    <label>Horário de chegada ao destino</label>
-    <input type="time" name="horario_saida" value="{{onibus.horario_saida if onibus else ''}}" required>
+    <label>Tempo de viagem</label>
+    <input type="time" name="previsao" value="{{onibus.previsao if onibus else ''}}" required>
 
     <label>Motorista</label>
     <select name="cpf_motorista" required>

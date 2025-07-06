@@ -19,7 +19,7 @@ class HomeController(BaseController):
 
         onibus_detalhado = []
         for o in lista:
-            situacao = self.onibus_service.calcular_diferenca(o) if o.status == 'chegado' else '-'
+            situacao = o.calcular_diferenca() if o.status == 'chegado' else '-'
             onibus_detalhado.append({
                 "id": o.id,
                 "placa": o.placa,

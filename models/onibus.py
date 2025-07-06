@@ -6,15 +6,14 @@ from datetime import datetime
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
 class Onibus:
-    def __init__(self, id, placa, linha, horario_chegada, horario_saida, terminal, 
+    def __init__(self, id, placa, linha, previsao, terminal, 
                  id_terminal_origem=None, id_terminal_destino=None, cpf_motorista=None, 
                  status='esperando', data_saida=None, data_chegada=None, passagens=0, 
                  previsao_chegada=None):
         self.id = id
         self.placa = placa
         self.linha = linha
-        self.horario_chegada = horario_chegada
-        self.horario_saida = horario_saida
+        self.previsao = previsao
         self.terminal = terminal 
         self.id_terminal_origem = id_terminal_origem
         self.id_terminal_destino = id_terminal_destino
@@ -36,8 +35,7 @@ class Onibus:
             'id': self.id,
             'placa': self.placa,
             'linha': self.linha,
-            'horario_chegada': self.horario_chegada,
-            'horario_saida': self.horario_saida,
+            'previsao': self.previsao,
             'terminal': self.terminal,
             'id_terminal_origem': self.id_terminal_origem,
             'id_terminal_destino': self.id_terminal_destino,
@@ -56,8 +54,7 @@ class Onibus:
             id=data['id'],
             placa=data['placa'],
             linha=data['linha'],
-            horario_chegada=data['horario_chegada'],
-            horario_saida=data['horario_saida'],
+            previsao=data['previsao'],
             terminal=data['terminal'],
             id_terminal_origem=data.get('id_terminal_origem'),
             id_terminal_destino=data.get('id_terminal_destino'),
@@ -105,6 +102,7 @@ class OnibusModel:
             json.dump([o.to_dict() for o in self.onibus], f, indent=4, ensure_ascii=False)
 
     def get_all(self):
+        self.onibus = self._load()
         return self.onibus
 
     def get_by_id(self, onibus_id):
@@ -128,5 +126,7 @@ class OnibusModel:
                 break
 
     def delete_onibus(self, onibus_id):
+        onibus_id = int(onibus_id)
         self.onibus = [o for o in self.onibus if o.id != onibus_id]
         self._save()
+

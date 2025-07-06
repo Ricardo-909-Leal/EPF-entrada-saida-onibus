@@ -2,7 +2,7 @@ from bottle import request
 from models.onibus import OnibusModel, Onibus
 from models.motorista import MotoristaModel
 from models.terminal import TerminalModel
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class OnibusService:
     def __init__(self):
@@ -37,8 +37,7 @@ class OnibusService:
 
         placa = request.forms.get('placa')
         linha = request.forms.get('linha')
-        horario_chegada = request.forms.get('horario_chegada')
-        horario_saida = request.forms.get('horario_saida')
+        previsao = request.forms.get('previsao')
         terminal = request.forms.get('terminal')
         cpf_motorista = request.forms.get('cpf_motorista')
         id_terminal_origem = request.forms.get('id_terminal_origem')
@@ -49,8 +48,7 @@ class OnibusService:
             id=new_id,
             placa=placa,
             linha=linha,
-            horario_chegada=horario_chegada,
-            horario_saida=horario_saida,
+            previsao=previsao,
             terminal=terminal,
             id_terminal_origem=id_terminal_origem,
             id_terminal_destino=id_terminal_destino,
@@ -80,8 +78,7 @@ class OnibusService:
     def edit_onibus(self, onibus):
         onibus.placa = request.forms.get('placa')
         onibus.linha = request.forms.get('linha')
-        onibus.horario_chegada = request.forms.get('horario_chegada')
-        onibus.horario_saida = request.forms.get('horario_saida')
+        onibus.previsao = request.forms.get('previsao')
         onibus.terminal = request.forms.get('terminal')
         onibus.cpf_motorista = request.forms.get('cpf_motorista')
         onibus.id_terminal_origem = request.forms.get('id_terminal_origem')
@@ -91,7 +88,12 @@ class OnibusService:
         self.onibus_model.update_onibus(onibus)
 
     def delete_onibus(self, onibus_id):
-        self.onibus_model.delete_onibus(onibus_id)
+        try:
+            self.onibus_model.delete_onibus(onibus_id)
+            return True
+        except Exception as e:
+            print(f"Erro ao deletar ônibus: {e}")
+            return False
 
     def calcular_diferenca(self, onibus: Onibus):
         if not onibus.data_chegada or not onibus.previsao_chegada:
@@ -110,6 +112,9 @@ class OnibusService:
         else:
             return "Chegou no horário"
 
+
+
+
     def iniciar_viagem(self, id):
         onibus = self.get_by_id(id)
         if not onibus:
@@ -118,15 +123,25 @@ class OnibusService:
         if onibus.status != 'esperando':
             print(f"Ônibus id={id} está com status {onibus.status} e não pode iniciar viagem")
             return False
+
+        agora = datetime.now()
         onibus.status = 'em viagem'
-        # Atualiza a hora de saída, por exemplo
-        onibus.horario_saida = datetime.now().strftime("%Y-%m-%d %H:%M")
+        onibus.data_saida = agora.strftime("%Y-%m-%d %H:%M")
+
+        try:
+            horas, minutos = map(int, onibus.previsao.split(':'))
+            duracao = timedelta(hours=horas, minutes=minutos)
+        except Exception as e:
+            print(f"Erro ao converter tempo de previsão: {e}")
+
+        onibus.previsao_chegada = (agora + duracao).strftime("%Y-%m-%d %H:%M")
+
         self.onibus_model.update_onibus(onibus)
         return True
 
 
     def encerrar_viagem(self, onibus_id, passagens):
-        onibus = self.get_by_id(int(onibus_id))  # converte para inteiro se necessário
+        onibus = self.get_by_id(int(onibus_id))  
         if not onibus:
             print("Ônibus não encontrado")
             return False

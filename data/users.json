@@ -1,8 +1,34 @@
 [
     {
-        "id": 1,
-        "name": "UsuÃ¡rio Teste",
-        "email": "uduarioteste@email.com",
-        "birthdate": "1999-10-21"
+        "id": 2,
+        "name": "Ricardo ",
+        "email": "ricardoeguiff@gmail.com",
+        "birthdate": "1211-12-12",
+        "password": "776e6866776974",
+        "tipo": "admin"
+    },
+    {
+        "id": 3,
+        "name": "Ricardo fiscal",
+        "email": "ricardofiscal@gmail.com",
+        "birthdate": "1211-12-12",
+        "password": "776e68667769746b6e78686671",
+        "tipo": "fiscal"
+    },
+    {
+        "id": 5,
+        "name": "Ricardo motorista",
+        "email": "ricardomotorista@gmail.com",
+        "birthdate": "2222-02-22",
+        "password": "72747974776e787966",
+        "tipo": "motorista"
+    },
+    {
+        "id": 6,
+        "name": "ricardoadimin",
+        "email": "ricardoadimin@gmail.com",
+        "birthdate": "2200-02-20",
+        "password": "66696e726e73",
+        "tipo": "admin"
     }
 ]

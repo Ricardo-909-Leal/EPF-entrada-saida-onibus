@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "nome": "RICARDO DE CARVALHO LEAL SOUZA",
+        "cpf": "2561349",
+        "terminal_id": 2
+    },
+    {
+        "id": 2,
+        "nome": "otavel vanal mial",
+        "cpf": "6262615",
+        "terminal_id": 2
+    },
+    {
+        "id": 3,
+        "nome": "RICARDO DE CARVALHO LEAL SOUZA",
+        "cpf": "152",
+        "terminal_id": 1
+    }
+]

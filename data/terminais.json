@@ -1,0 +1,20 @@
+[
+    {
+        "id": "1",
+        "nome": "terminal Valpariso",
+        "endereco": "valparaiso",
+        "capacidade": null
+    },
+    {
+        "id": "2",
+        "nome": "GAMA",
+        "endereco": "gama",
+        "capacidade": null
+    },
+    {
+        "id": "3",
+        "nome": "Ceilandia",
+        "endereco": "Ceilandia",
+        "capacidade": null
+    }
+]

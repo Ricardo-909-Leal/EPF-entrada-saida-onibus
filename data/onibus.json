@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "placa": "89.65",
+        "linha": "87.65",
+        "previsao": "01:30",
+        "terminal": null,
+        "id_terminal_origem": "1",
+        "id_terminal_destino": "2",
+        "cpf_motorista": "075.631.621-94",
+        "status": "chegado",
+        "data_saida": "2025-07-06 14:40",
+        "data_chegada": "2025-07-06 14:40",
+        "passagens": 7895421,
+        "previsao_chegada": "2025-07-06 16:10"
+    }
+]

@@ -15,13 +15,14 @@ def login():
 
         user = auth_service.autenticar(usuario, senha)
         if user:
-            response.set_cookie('usuario', user['name'], path='/')
-            response.set_cookie('tipo_usuario', user['tipo'].lower().strip(), path='/')
+            response.set_cookie('usuario', user.name, path='/')
+            response.set_cookie('tipo_usuario', user.tipo.lower().strip(), path='/')
             redirect('/')
         else:
             return template('login', erro='Usuário ou senha inválidos.')
 
     return template('login', erro='')
+
 
 
 @auth_routes.route('/logout')

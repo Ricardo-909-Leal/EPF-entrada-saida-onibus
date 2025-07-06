@@ -24,20 +24,10 @@ class UserController(BaseController):
 
     def add_user(self):
         if request.method == 'GET':
-            return self.render('user_form', user=None, action="/users/add")
+            return self.render('user_form', user=None, action="/users/add", erro=None)
         else: 
             try:
-                
-                name = request.forms.get('name')
-                email = request.forms.get('email')
-                birthdate = request.forms.get('birthdate')
-                password = request.forms.get('password')
-
-                if not password:
-                    raise ValueError("Senha não pode ser vazia")
-
-                user = self.user_service.create_user(name, email, birthdate, password)
-                self.user_service.save(user)
+                self.user_service.save()  # Só isso, pois já está tratando tudo no service
                 self.redirect('/users')
 
             except ValueError as e:
@@ -45,14 +35,32 @@ class UserController(BaseController):
 
     def edit_user(self, user_id):
         user = self.user_service.get_by_id(user_id)
+        password = request.forms.get('password')
+        if password:
+            user.password = password
+
         if not user:
             return "Usuário não encontrado"
 
         if request.method == 'GET':
-            return self.render('user_form', user=user, action=f"/users/edit/{user_id}")
+            return self.render(
+                'user_form',
+                user=user,
+                action=f"/users/edit/{user_id}",
+                erro=None 
+            )
         else:
-            self.user_service.edit_user(user)
-            self.redirect('/users')
+            try:
+                self.user_service.edit_user(user)
+                self.redirect('/users')
+            except ValueError as e:
+                return self.render(
+                    'user_form',
+                    user=user,
+                    action=f"/users/edit/{user_id}",
+                    erro=str(e)
+                )
+
 
 
     def delete_user(self, user_id):

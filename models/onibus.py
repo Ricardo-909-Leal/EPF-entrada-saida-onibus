@@ -41,8 +41,14 @@ class Onibus:
             'terminal': self.terminal,
             'id_terminal_origem': self.id_terminal_origem,
             'id_terminal_destino': self.id_terminal_destino,
-            'cpf_motorista': self.cpf_motorista
+            'cpf_motorista': self.cpf_motorista,
+            'status': self.status,
+            'data_saida': self.data_saida,
+            'data_chegada': self.data_chegada,
+            'passagens': self.passagens,
+            'previsao_chegada': self.previsao_chegada
         }
+
 
     @classmethod
     def from_dict(cls, data):
@@ -102,6 +108,7 @@ class OnibusModel:
         return self.onibus
 
     def get_by_id(self, onibus_id):
+        onibus_id = int(onibus_id)
         return next((o for o in self.onibus if o.id == onibus_id), None)
 
     def get_next_id(self):

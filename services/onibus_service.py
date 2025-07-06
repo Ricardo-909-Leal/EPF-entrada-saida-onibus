@@ -110,15 +110,30 @@ class OnibusService:
         else:
             return "Chegou no horário"
 
-    def encerrar_viagem(self, onibus_id, passagens):
-        onibus = self.get_by_id(onibus_id)
+    def iniciar_viagem(self, id):
+        onibus = self.get_by_id(id)
         if not onibus:
-            return None
+            print(f"Ônibus id={id} não encontrado")
+            return False
+        if onibus.status != 'esperando':
+            print(f"Ônibus id={id} está com status {onibus.status} e não pode iniciar viagem")
+            return False
+        onibus.status = 'em viagem'
+        # Atualiza a hora de saída, por exemplo
+        onibus.horario_saida = datetime.now().strftime("%Y-%m-%d %H:%M")
+        self.onibus_model.update_onibus(onibus)
+        return True
+
+
+    def encerrar_viagem(self, onibus_id, passagens):
+        onibus = self.get_by_id(int(onibus_id))  # converte para inteiro se necessário
+        if not onibus:
+            print("Ônibus não encontrado")
+            return False
 
         onibus.status = 'chegado'
         onibus.data_chegada = datetime.now().strftime("%Y-%m-%d %H:%M")
         onibus.passagens = passagens
 
         self.onibus_model.update_onibus(onibus)
-        return onibus
-
+        return True

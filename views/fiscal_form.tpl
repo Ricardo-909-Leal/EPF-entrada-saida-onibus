@@ -4,8 +4,8 @@
     <label for="nome">Nome:</label>
     <input type="text" id="nome" name="nome" value="{{fiscal.nome if fiscal else ''}}" required>
 
-    <label for="matricula">Matrícula:</label>
-    <input type="text" id="matricula" name="matricula" value="{{fiscal.matricula if fiscal else ''}}" required>
+    <label for="CPF">CPF:</label>
+    <input type="text" id="cpf" name="cpf" value="{{fiscal.cpf if fiscal else ''}}" required>
 
     <label for="terminal_id">Terminal:</label>
     <select id="terminal_id" name="terminal_id" required>

@@ -29,10 +29,10 @@ class FiscalController(BaseController):
             return self.render('fiscal_form', fiscal=None, action='/fiscais/add', terminais=terminais, title="Adicionar Fiscal")
         else:
             nome = request.forms.get('nome')
-            matricula = request.forms.get('matricula')
+            cpf = request.forms.get('cpf')
             terminal_id = int(request.forms.get('terminal_id'))
 
-            self.fiscal_service.save(nome, matricula, terminal_id)
+            self.fiscal_service.save(nome, cpf, terminal_id)
             self.redirect('/fiscais')
 
 
@@ -47,10 +47,10 @@ class FiscalController(BaseController):
             return self.render('fiscal_form', fiscal=fiscal, action=f'/fiscais/edit/{fiscal_id}', terminais=terminais, title="Editar Fiscal")
         else:
             nome = request.forms.get('nome')
-            matricula = request.forms.get('matricula')
+            cpf = request.forms.get('cpf')
             terminal_id = int(request.forms.get('terminal_id'))
 
-            self.fiscal_service.edit_fiscal(fiscal_id, nome, matricula, terminal_id)
+            self.fiscal_service.edit_fiscal(fiscal_id, nome, cpf, terminal_id)
             self.redirect('/fiscais')
 
     def deletar(self, fiscal_id):
@@ -58,6 +58,6 @@ class FiscalController(BaseController):
         self.fiscal_service.delete_fiscal(fiscal_id)
         self.redirect('/fiscais')
 
-# Para usar no init_controllers
+
 fiscal_routes = Bottle()
 fiscal_controller = FiscalController(fiscal_routes)

@@ -7,7 +7,7 @@
         <tr>
             <th>ID</th>
             <th>Nome</th>
-            <th>Matrícula</th>
+            <th>CPF</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -17,7 +17,7 @@
         <tr>
             <td>{{f.id}}</td>
             <td>{{f.nome}}</td>
-            <td>{{f.matricula}}</td>
+            <td>{{f.cpf}}</td>
             <td>
                 <a href="/fiscais/edit/{{f.id}}">Editar</a>
                 <form action="/fiscais/delete/{{f.id}}" method="post" style="display:inline;">

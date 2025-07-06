@@ -23,7 +23,7 @@ class BaseController:
     def home_redirect(self):
         usuario = request.get_cookie('usuario')
         if usuario:
-            return self.redirect('/users')
+            return self.redirect('/home')
         else:
             return self.redirect('/login')
 

@@ -151,3 +151,61 @@ main {
   border: 1px solid var(--border-color);
   border-radius: 4px;
 }
+.atrasado { color: red; font-weight: bold; }
+.adiantado { color: green; font-weight: bold; }
+
+.container, table, form {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  background-color: white;
+}
+
+th, td {
+  padding: 12px 16px;
+}
+
+form {
+  padding: 20px;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+button, .btn, a.button {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover, .btn:hover, a.button:hover {
+  transform: scale(1.02);
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.status.adiantado {
+  background-color: #d4edda;
+  color: #2e7d32;
+}
+
+.status.atrasado {
+  background-color: #f8d7da;
+  color: #c62828;
+}

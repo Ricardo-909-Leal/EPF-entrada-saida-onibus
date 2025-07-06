@@ -31,21 +31,24 @@
             <td>{{o.nome_terminal_destino}}</td>
             <td>{{o.status}}</td>
             <td>
-                <a href="/onibus/edit/{{o.id}}">Editar</a>
-                <form action="/onibus/delete/{{o.id}}" method="post" style="display:inline;">
-                    <button type="submit" onclick="return confirm('Confirma exclusão?')">Excluir</button>
-                </form>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+                    <a href="/onibus/edit/{{o.id}}" class="btn btn-success">Editar</a>
 
-                % if user_tipo == 'motorista' and o.status == 'esperando':
-                    <form action="/onibus/iniciar/{{o.id}}" method="post" style="display:inline;">
-                        <button type="submit">Iniciar Viagem</button>
+                    <form action="/onibus/delete/{{o.id}}" method="post">
+                        <button type="submit" class="btn" onclick="return confirm('Confirma exclusão?')">Excluir</button>
                     </form>
-                % elif user_tipo == 'fiscal' and o.status == 'em viagem':
-                    <form action="/onibus/finalizar/{{o.id}}" method="post" style="display:inline;">
-                        <input type="number" name="passagens" min="0" placeholder="Passagens" required style="width:70px;"/>
-                        <button type="submit">Finalizar Viagem</button>
-                    </form>
-                % end
+
+                    % if user_tipo == 'motorista' and o.status == 'esperando':
+                        <form action="/onibus/iniciar/{{o.id}}" method="post">
+                            <button type="submit" class="btn btn-success">Iniciar Viagem</button>
+                        </form>
+                    % elif user_tipo == 'fiscal' and o.status == 'em viagem':
+                        <form action="/onibus/finalizar/{{o.id}}" method="post" style="display: flex; align-items: center; gap: 6px;">
+                            <input type="number" name="passagens" min="0" placeholder="Passagens" required style="width: 80px;" />
+                            <button type="submit" class="btn btn-danger">Finalizar Viagem</button>
+                        </form>
+                    % end
+                </div>
             </td>
         </tr>
         % end

@@ -14,6 +14,7 @@ class AuthService:
 
     def autenticar(self, usuario, senha):
         for u in self.usuarios:
-            if u['usuario'] == usuario and u['senha'] == senha:
-                return u  # Retorna o dicionário completo do usuário
+            if u['email'] == usuario and u['password'] == senha:
+                return u
         return None
+

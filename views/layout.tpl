@@ -48,7 +48,7 @@
 
     <nav>
         <ul>
-            <li><a href="/">Início</a></li>
+            <li><a href="/home">Início</a></li>
             <li><a href="/onibus">Ônibus</a></li>
             <li><a href="/motoristas">Motoristas</a></li>
             <li><a href="/fiscais">Fiscais</a></li>

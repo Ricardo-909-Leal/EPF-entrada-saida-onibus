@@ -21,8 +21,11 @@ class BaseController:
 
 
     def home_redirect(self):
-        """Redireciona a rota raiz para /users"""
-        return self.redirect('/users')
+        usuario = request.get_cookie('usuario')
+        if usuario:
+            return self.redirect('/users')
+        else:
+            return self.redirect('/login')
 
 
     def helper(self):
@@ -52,7 +55,6 @@ class BaseController:
 
 
     def redirect(self, path):
-        """Método auxiliar para redirecionamento"""
         from bottle import redirect as bottle_redirect
         return bottle_redirect(path)
 

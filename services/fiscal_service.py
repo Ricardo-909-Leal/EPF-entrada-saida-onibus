@@ -12,20 +12,20 @@ class FiscalService:
     def get_by_id(self, id):
         return self.model.get_by_id(id)
 
-    def save(self, nome, matricula, terminal_id):
+    def save(self, nome, cpf, terminal_id):
         novo_fiscal = Fiscal(
             id=self.model.get_next_id(),
             nome=nome,
-            matricula=matricula,
+            cpf=cpf,
             terminal_id=terminal_id
         )
         self.model.add_fiscal(novo_fiscal)
 
-    def edit_fiscal(self, fiscal_id, nome, matricula, terminal_id):
+    def edit_fiscal(self, fiscal_id, nome, cpf, terminal_id):
         fiscal = self.model.get_by_id(fiscal_id)
         if fiscal:
             fiscal.nome = nome
-            fiscal.matricula = matricula
+            fiscal.cpf = cpf
             fiscal.terminal_id = terminal_id
             self.model.update_fiscal(fiscal)
 

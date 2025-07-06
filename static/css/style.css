@@ -209,3 +209,13 @@ body {
   background-color: #f8d7da;
   color: #c62828;
 }
+td form {
+  margin: 0;
+}
+
+td > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}

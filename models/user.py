@@ -97,6 +97,7 @@ class UserModel:
         self._save()
 
     def authenticate(self, email: str, password: str):
+        self.get_all()
         user = self.get_by_email(email)
         print("Tentando autenticar:", email, password)
         print("Usuário encontrado:", user)

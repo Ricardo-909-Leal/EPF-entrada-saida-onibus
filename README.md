@@ -1,105 +1,102 @@
-# Projeto Template: POO com Python + Bottle + JSON
+## 🚍 EPF: Sistema de Entrada e Saída de Ônibus
 
-Este é um projeto de template educacional voltado para o ensino de **Programação Orientada a Objetos (POO)** do Prof. Lucas Boaventura, Universidade de Brasília (UnB).
+Este projeto implementa um sistema web para **controle de fluxo de ônibus em terminais**, desenvolvido em Python com o microframework **Bottle**, orientado a objetos, utilizando arquivos JSON como persistência de dados.
 
-Utiliza o microframework **Bottle**. Ideal para uso em disciplinas introdutórias de Engenharia de Software ou Ciência da Computação.
+### 🎯 Objetivo
 
-## 💡 Objetivo
+Permitir que:
 
-Fornecer uma base simples, extensível e didática para construção de aplicações web orientadas a objetos com aplicações WEB em Python, ideal para trabalhos finais ou exercícios práticos.
+* **Motoristas** iniciem viagens (“start”).
+* **Fiscais** finalizem viagens e registrem o número de passagens.
+* O sistema calcule atrasos ou adiantamentos com base em previsões de horário.
 
----
+### 📂 Estrutura do Projeto
 
-## 🗂 Estrutura de Pastas
-
-```bash
-poo-python-bottle-template/
-├── app.py # Ponto de entrada do sistema
-├── config.py # Configurações e caminhos do projeto
-├── main.py # Inicialização da aplicação
-├── requirements.txt # Dependências do projeto
-├── README.md # Este arquivo
-├── controllers/ # Controladores e rotas
-├── models/ # Definição das entidades (ex: User)
-├── services/ # Lógica de persistência (JSON)
-├── views/ # Arquivos HTML (Bottle Templating)
-├── static/ # CSS, JS e imagens
-├── data/ # Arquivos JSON de dados
-└── .vscode/ # Configurações opcionais do VS Code
+```
+epf-entrada-saida-onibus/
+├── main.py              # Ponto de entrada da aplicação
+├── app.py               # Configuração do Bottle e setup de rotas
+├── config.py            # Constantes e caminhos (opcional)
+├── requirements.txt     # Dependências (bottle, etc.)
+├── README.md            # Documentação do projeto
+├── controllers/         # Definição de rotas e controllers
+├── services/            # Lógica de negócio e persistência JSON
+├── models/              # Entidades do domínio
+├── views/               # Templates Bottle (HTML .tpl)
+├── static/              # Arquivos estáticos (CSS, JS, imagens)
+└── data/                # Arquivos JSON ("bancos de dados")
 ```
 
+### ⚙️ Como Executar (local)
+
+0-Modifique config.py e altere para o texto comentado.
+
+1. **Clone o repositório**:
+
+   git clone <URL_DO_REPO>
+   cd epf-entrada-saida-onibus
+
+
+2. **Crie e ative o ambiente virtual**:
+
+
+   python -m venv venv
+   source venv/bin/activate   # Linux/Mac
+   venv\\Scripts\\activate    # Windows
+
+
+3. **Instale as dependências**:
+
+   pip install -r requirements.txt
+
+
+4. **Inicie a aplicação**:
+
+   python main.py
+
+5. **Acesse no navegador**:
+
+[http://localhost:8080''']
+
+### 📋 Funcionalidades Principais
+
+* **Login e controle de acesso**: Admin, Fiscal, Motorista.
+* **CRUD de usuários** (Admin).
+* **Listagem e registro de viagens**:
+
+  * Início de viagem pelo Motorista.
+  * Finalização pelo Fiscal com contagem de passagens.
+  * Cálculo de atraso/adiantamento comparado à previsão.
+* **Visão de status dos ônibus**: placa, linha, origem, destino, previsão, chegada.
+
+### 🔧 Configurações
+
+* Arquivos de dados no diretório `data/`. Para resetar os dados, delete os arquivos JSON.
+* Adapte `config.py` para alterar caminhos ou parâmetros globais.
+
+### 🚀 Deploy
+
+Para testar online (ex: Render.com):
+
+1. Configure `start.sh` com:
+
+   #!/bin/bash
+   python3 main.py
+
+2. No `requirements.txt`, inclua:
+
+
+
+bottle
+
+3. Aponte o comando de start no serviço de deploy para `bash start.sh`.
+
+### 📚 Referências
+- Projeto-base BMVC: https://github.com/hgmachine/bmvc_start_from_this
+- Bottle Framework: https://bottlepy.org/
 
 ---
 
-## 📁 Descrição das Pastas
+*Desenvolvido por Ricardo Eduardo da Silva Leal (242015405) como EPF de Orientação a Objetos*
 
-### `controllers/`
-Contém as classes responsáveis por lidar com as rotas da aplicação. Exemplos:
-- `user_controller.py`: rotas para listagem, adição, edição e remoção de usuários.
-- `base_controller.py`: classe base com utilitários comuns.
-
-### `models/`
-Define as classes que representam os dados da aplicação. Exemplo:
-- `user.py`: classe `User`, com atributos como `id`, `name`, `email`, etc.
-
-### `services/`
-Responsável por salvar, carregar e manipular dados usando arquivos JSON. Exemplo:
-- `user_service.py`: contém métodos como `get_all`, `add_user`, `delete_user`.
-
-### `views/`
-Contém os arquivos `.tpl` utilizados pelo Bottle como páginas HTML:
-- `layout.tpl`: estrutura base com navegação e bloco `content`.
-- `users.tpl`: lista os usuários.
-- `user_form.tpl`: formulário para adicionar/editar usuário.
-
-### `static/`
-Arquivos estáticos como:
-- `css/style.css`: estilos básicos.
-- `js/main.js`: scripts JS opcionais.
-- `img/BottleLogo.png`: exemplo de imagem.
-
-### `data/`
-Armazena os arquivos `.json` que simulam o banco de dados:
-- `users.json`: onde os dados dos usuários são persistidos.
-
----
-
-## ▶️ Como Executar
-
-1. Crie o ambiente virtual na pasta fora do seu projeto:
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\\Scripts\\activate     # Windows
 ```
-
-2. Entre dentro do seu projeto criado a partir do template e instale as dependências:
-```bash
-pip install -r requirements.txt
-```
-
-3. Rode a aplicação:
-```bash
-python main.py
-```
-
-4. Accese sua aplicação no navegador em: [http://localhost:8080](http://localhost:8080)
-
----
-
-## ✍️ Personalização
-Para adicionar novos modelos (ex: Atividades):
-
-1. Crie a classe no diretório **models/**.
-
-2. Crie o service correspondente para manipulação do JSON.
-
-3. Crie o controller com as rotas.
-
-4. Crie as views .tpl associadas.
-
----
-
-## 🧠 Autor e Licença
-Projeto desenvolvido como template didático para disciplinas de Programação Orientada a Objetos, baseado no [BMVC](https://github.com/hgmachine/bmvc_start_from_this).
-Você pode reutilizar, modificar e compartilhar livremente.

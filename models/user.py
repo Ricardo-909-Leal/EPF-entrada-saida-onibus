@@ -69,6 +69,7 @@ class UserModel:
             json.dump([u.to_dict() for u in self.users], f, indent=4, ensure_ascii=False)
 
     def get_all(self):
+        self.users = self._load()
         return self.users
 
     def get_by_id(self, user_id: int):

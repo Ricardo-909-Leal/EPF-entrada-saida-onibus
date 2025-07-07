@@ -90,7 +90,12 @@ Para testar online (ex: Render.com):
 bottle
 
 3. Aponte o comando de start no serviço de deploy para `bash start.sh`.
+## 📊 Diagrama UML do Sistema
 
+![![alt text](image.png)]
+
+> **Descrição:**  
+> Diagrama de classes que mostra as principais entidades do sistema, suas relações e atributos.
 ### 📚 Referências
 - Projeto-base BMVC: https://github.com/hgmachine/bmvc_start_from_this
 - Bottle Framework: https://bottlepy.org/

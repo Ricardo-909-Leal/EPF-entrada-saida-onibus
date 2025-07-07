@@ -1,5 +1,6 @@
 import json
 import os
+from models.user import UserModel
 
 class AuthService:
     def __init__(self):
@@ -13,9 +14,7 @@ class AuthService:
             return json.load(f)
 
     def autenticar(self, usuario, senha):
-        self.usuarios = self._carregar_usuarios()  
-        for u in self.usuarios:
-            if u['email'] == usuario and u['password'] == senha:
-                return u
-        return None
+        user_model = UserModel()
+        return user_model.authenticate(usuario, senha)
+
 
